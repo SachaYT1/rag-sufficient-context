@@ -80,6 +80,10 @@ def categorize_response(prediction: str, gold: str, f1_threshold: float = 0.5) -
     Returns:
         One of 'correct', 'abstain', 'hallucinate'
     """
+    # NOTE: Abstention is checked first by design. If a response contains both
+    # an abstention phrase and the correct answer (e.g., "It might be Paris but
+    # I don't know"), we treat it as abstention since the model is signaling
+    # uncertainty rather than committing to an answer.
     if is_abstention(prediction):
         return "abstain"
 

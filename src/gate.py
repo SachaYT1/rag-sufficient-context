@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score, cross_val_predict
 
 
 def prepare_features(examples: list[dict]) -> tuple[np.ndarray, np.ndarray]:
@@ -66,11 +66,20 @@ def compute_selective_curves(
         baseline_accuracies.append(accuracy)
 
     # Proposed: gate score (confidence + sufficiency)
+    # Use cross-validated predictions to avoid train/test contamination
     proposed_coverages = []
     proposed_accuracies = []
     if gate is not None:
         X = np.column_stack([confidences, sufficients])
-        gate_scores = gate.predict_proba(X)[:, 1]
+        # Cross-validated probability estimates for unbiased evaluation
+        try:
+            gate_scores = cross_val_predict(
+                LogisticRegression(random_state=42, max_iter=1000),
+                X, corrects, cv=5, method="predict_proba",
+            )[:, 1]
+        except ValueError:
+            # Fallback if CV fails (e.g., too few samples)
+            gate_scores = gate.predict_proba(X)[:, 1]
 
         for t in thresholds:
             mask = gate_scores >= t

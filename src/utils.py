@@ -1,4 +1,4 @@
-"""Shared utilities: data loading, caching, tokenization helpers."""
+"""Shared utilities: data loading, caching, tokenization, LLM generation."""
 
 import json
 import os
@@ -6,6 +6,7 @@ import hashlib
 from pathlib import Path
 from typing import Any
 
+import torch
 import yaml
 
 
@@ -51,6 +52,44 @@ def chunk_text(text: str, chunk_size_tokens: int, tokenizer) -> list[str]:
     chunks = []
     for i in range(0, len(tokens), chunk_size_tokens):
         chunk_tokens = tokens[i : i + chunk_size_tokens]
-        chunk_text = tokenizer.decode(chunk_tokens, skip_special_tokens=True)
-        chunks.append(chunk_text)
+        decoded = tokenizer.decode(chunk_tokens, skip_special_tokens=True)
+        chunks.append(decoded)
     return chunks
+
+
+def generate_text(
+    prompt: str,
+    model,
+    tokenizer,
+    max_new_tokens: int = 256,
+    greedy: bool = True,
+) -> str:
+    """Shared LLM text generation with consistent parameters.
+
+    Args:
+        prompt: raw text prompt (will be wrapped in chat template)
+        model: HuggingFace causal LM
+        tokenizer: corresponding tokenizer
+        max_new_tokens: max tokens to generate
+        greedy: if True, use greedy decoding; otherwise sample with temperature
+
+    Returns:
+        Decoded string of newly generated tokens.
+    """
+    messages = [{"role": "user", "content": prompt}]
+    input_text = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True,
+    )
+
+    inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
+
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            do_sample=not greedy,
+            pad_token_id=tokenizer.pad_token_id,
+        )
+
+    new_tokens = outputs[0][inputs["input_ids"].shape[1]:]
+    return tokenizer.decode(new_tokens, skip_special_tokens=True)

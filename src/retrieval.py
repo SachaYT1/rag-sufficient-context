@@ -79,10 +79,13 @@ def retrieve_context(
 
 
 def build_retrieval_pipeline(examples: list[dict], top_k: int = 5, max_context_tokens: int = 4096, tokenizer=None) -> list[dict]:
-    """Run retrieval for all examples.
+    """Run BM25 re-ranking for all examples.
 
-    For each example, uses the provided distractor passages from HotPotQA
-    and retrieves top-k via BM25.
+    NOTE: This is per-question BM25 re-ranking over the HotPotQA distractor set
+    (10 passages per question: 2 gold + 8 distractors), NOT corpus-level retrieval.
+    We build a separate BM25 index per question from its candidate passages and
+    select the top-k most relevant. This simulates a retrieval step within
+    the HotPotQA distractor setting.
     """
     results = []
     for ex in tqdm(examples, desc="Retrieving contexts"):

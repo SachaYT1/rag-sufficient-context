@@ -3,7 +3,7 @@
 import json
 from tqdm import tqdm
 
-from src.utils import chunk_text
+from src.utils import chunk_text, generate_text
 
 
 AUTORATER_PROMPT_TEMPLATE = """You are evaluating whether the provided context contains enough information to answer the given question.
@@ -55,25 +55,7 @@ def rate_single_chunk(
 ) -> bool | None:
     """Rate sufficiency for a single (question, chunk) pair."""
     prompt = AUTORATER_PROMPT_TEMPLATE.format(context=chunk, question=question)
-
-    messages = [{"role": "user", "content": prompt}]
-    input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-
-    import torch
-    inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
-
-    with torch.no_grad():
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=max_new_tokens,
-            temperature=0.01,
-            do_sample=False,
-            pad_token_id=tokenizer.pad_token_id,
-        )
-
-    new_tokens = outputs[0][inputs["input_ids"].shape[1]:]
-    raw_output = tokenizer.decode(new_tokens, skip_special_tokens=True)
-
+    raw_output = generate_text(prompt, model, tokenizer, max_new_tokens=max_new_tokens, greedy=True)
     return parse_autorater_response(raw_output)
 
 

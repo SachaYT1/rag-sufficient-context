@@ -5,6 +5,8 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from tqdm import tqdm
 
+from src.utils import generate_text
+
 
 QA_PROMPT_TEMPLATE = """You are a helpful assistant answering questions based on the provided context.
 If the context does not contain enough information to answer the question, say "I don't know".
@@ -57,9 +59,10 @@ def parse_llm_response(raw_output: str) -> dict:
         if start != -1 and end > start:
             json_str = raw_output[start:end]
             parsed = json.loads(json_str)
+            conf = float(parsed.get("confidence", 0.0))
             return {
                 "answer": str(parsed.get("answer", "")).strip(),
-                "confidence": float(parsed.get("confidence", 0.0)),
+                "confidence": max(0.0, min(1.0, conf)),
             }
     except (json.JSONDecodeError, ValueError):
         pass
@@ -84,24 +87,10 @@ def generate_answer(
     Returns dict with 'answer', 'confidence', 'raw_output'.
     """
     prompt = format_prompt(question, context)
-
-    messages = [{"role": "user", "content": prompt}]
-    input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-
-    inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
-
-    with torch.no_grad():
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=max_new_tokens,
-            temperature=max(temperature, 0.01),  # avoid 0.0
-            do_sample=temperature > 0,
-            pad_token_id=tokenizer.pad_token_id,
-        )
-
-    # Decode only new tokens
-    new_tokens = outputs[0][inputs["input_ids"].shape[1]:]
-    raw_output = tokenizer.decode(new_tokens, skip_special_tokens=True)
+    raw_output = generate_text(
+        prompt, model, tokenizer,
+        max_new_tokens=max_new_tokens, greedy=(temperature == 0.0),
+    )
 
     parsed = parse_llm_response(raw_output)
     parsed["raw_output"] = raw_output

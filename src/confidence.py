@@ -3,6 +3,8 @@
 import json
 from tqdm import tqdm
 
+from src.utils import generate_text
+
 
 CONFIDENCE_PROMPT_TEMPLATE = """You previously answered the following question based on a context.
 
@@ -56,25 +58,7 @@ def estimate_confidence_separate(
     prompt = CONFIDENCE_PROMPT_TEMPLATE.format(
         context=context, question=question, answer=answer,
     )
-
-    messages = [{"role": "user", "content": prompt}]
-    input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-
-    import torch
-    inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
-
-    with torch.no_grad():
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=max_new_tokens,
-            temperature=0.01,
-            do_sample=False,
-            pad_token_id=tokenizer.pad_token_id,
-        )
-
-    new_tokens = outputs[0][inputs["input_ids"].shape[1]:]
-    raw_output = tokenizer.decode(new_tokens, skip_special_tokens=True)
-
+    raw_output = generate_text(prompt, model, tokenizer, max_new_tokens=max_new_tokens, greedy=True)
     return parse_confidence_response(raw_output)
 
 
