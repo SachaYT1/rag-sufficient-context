@@ -10,7 +10,7 @@ retrieval:
   max_context_tokens: 4096
 
 generation:
-  model: meta-llama/Llama-3.1-8B-Instruct
+  model: mistralai/Mistral-7B-Instruct-v0.3
   max_new_tokens: 256
   temperature: 0.0
 
