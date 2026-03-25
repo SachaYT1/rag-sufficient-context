@@ -1,0 +1,26 @@
+dataset:
+  name: hotpotqa
+  split: validation
+  num_examples: 500
+  seed: 42
+
+retrieval:
+  method: bm25
+  top_k: 5
+  max_context_tokens: 4096
+
+generation:
+  model: meta-llama/Llama-3.1-8B-Instruct
+  max_new_tokens: 256
+  temperature: 0.0
+
+autorater:
+  chunk_size_tokens: 1400
+  aggregation: or
+
+confidence:
+  method: p_correct
+
+gate:
+  model: logistic_regression
+  threshold_steps: 50

@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Data files (large)
+data/*.json
+data/*.jsonl
+data/*.parquet
+data/corpus/
+!data/.gitkeep
+
+# Results (regenerable)
+results/*.json
+results/*.png
+results/*.csv
+!results/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# HuggingFace cache
+.cache/
+
+# Claude
+.claude/
+
+# docs
+docs/
+
+# reports
+reports/
