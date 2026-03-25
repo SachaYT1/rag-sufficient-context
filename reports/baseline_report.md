@@ -1,5 +1,7 @@
 # Baseline Report: RAG Sufficient Context — Selective Generation Pipeline
 
+**GitHub Repository:** https://github.com/SachaYT1/rag-sufficient-context
+
 ## 1. Product Name
 
 **RAG Sufficient Context** — a pipeline for explaining and reducing hallucinations in Retrieval-Augmented Generation systems via selective generation, inspired by the ICLR 2025 paper *"Sufficient Context: A New Lens on Systems Retrieval Augmented Generation"*.
