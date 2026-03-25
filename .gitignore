@@ -19,11 +19,6 @@ data/*.parquet
 data/corpus/
 !data/.gitkeep
 
-# Results (regenerable)
-results/*.json
-results/*.png
-results/*.csv
-!results/.gitkeep
 
 # IDE
 .vscode/
@@ -45,6 +40,3 @@ Thumbs.db
 
 # docs
 docs/
-
-# reports
-reports/
