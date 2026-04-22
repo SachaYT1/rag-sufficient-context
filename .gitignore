@@ -44,6 +44,10 @@ reports/figures/*.png
 reports/figures/*.pdf
 !reports/baseline_report.pdf
 
+# Experiment outputs (regenerated per run)
+results/*
+!results/.gitkeep
+
 # Claude
 .claude/
 .agents/
