@@ -303,6 +303,7 @@ def evaluate_all(
                 model_name=model_name,
                 extra={
                     "num_examples": total,
+                    
                     "f1_threshold": f1_threshold,
                 },
             )
