@@ -56,3 +56,6 @@ skills-lock.json
 # docs
 docs/
 CLAUDE.md
+
+# MCP config (local Claude Code)
+.mcp.json
