@@ -1,0 +1,26 @@
+experiment:
+  name: qwen3b_bm25
+
+dataset:
+  name: hotpotqa
+  split: validation
+  num_examples: 500
+  seed: 42
+
+retrieval:
+  method: bm25
+  top_k: 5
+  max_context_tokens: 4096
+
+generation:
+  model_name: qwen2.5-3b-instruct
+  torch_dtype: bfloat16
+
+autorater:
+  method: cot
+
+confidence:
+  method: self_report
+
+gate:
+  model: logistic_regression

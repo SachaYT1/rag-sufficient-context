@@ -1,0 +1,33 @@
+# Asymmetric setup: small generator + large judge.
+# The "model_name" under autorater overrides the shared generator for rating.
+experiment:
+  name: asymmetric_qwen3b_gen_qwen7b_judge
+
+dataset:
+  name: hotpotqa
+  split: validation
+  num_examples: 500
+  seed: 42
+
+retrieval:
+  method: hybrid_rrf
+  top_k: 5
+  max_context_tokens: 4096
+
+generation:
+  model_name: qwen2.5-3b-instruct
+  torch_dtype: bfloat16
+
+autorater:
+  method: fewshot
+  model_name: qwen2.5-7b-instruct
+
+confidence:
+  method: semantic_entropy
+  num_samples: 5
+  sample_temperature: 0.7
+  sample_top_p: 0.95
+
+gate:
+  model: xgboost
+  conformal_alpha: 0.1

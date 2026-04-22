@@ -1,0 +1,61 @@
+[project]
+name = "rag-sufficient-context"
+version = "0.2.0"
+description = "Selective RAG generation guided by sufficient-context signal and confidence."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Aleksandr Gavkovskii" },
+    { name = "Ilya Maksimov" },
+    { name = "Karim Zakirov" },
+]
+license = { text = "MIT" }
+dependencies = [
+    "accelerate>=0.34.2",
+    "datasets>=2.21.0",
+    "matplotlib>=3.9.2",
+    "numpy>=1.26.4,<2",
+    "pandas>=2.2.3",
+    "PyYAML>=6.0.2",
+    "rank-bm25>=0.2.2",
+    "scikit-learn>=1.5.2",
+    "scipy>=1.13",
+    "torch>=2.4.1",
+    "tqdm>=4.66.5",
+    "transformers>=4.45.2",
+]
+
+[project.optional-dependencies]
+dense = ["sentence-transformers>=3.0.0"]
+gate = ["xgboost>=2.0"]
+demo = ["ipywidgets>=8.0"]
+dev = ["pytest>=8.0", "ruff>=0.6", "mypy>=1.10", "types-PyYAML"]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["E501", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+warn_unused_ignores = true
+strict_optional = false

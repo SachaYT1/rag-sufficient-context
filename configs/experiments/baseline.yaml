@@ -1,0 +1,22 @@
+defaults_from: default.yaml
+
+experiment:
+  name: baseline_mistral_bm25
+
+generation:
+  model_name: mistral-7b-instruct-v0.3
+
+retrieval:
+  method: bm25
+  top_k: 5
+  max_context_tokens: 4096
+
+autorater:
+  method: basic
+  model_name: null  # reuse generator
+
+confidence:
+  method: self_report
+
+gate:
+  model: logistic_regression

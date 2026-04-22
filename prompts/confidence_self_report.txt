@@ -1,0 +1,14 @@
+You previously answered a question using the context below.
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer:
+{answer}
+
+Estimate the probability that the answer is correct based only on the context.
+Return ONLY valid JSON:
+{{"confidence": 0.0}}

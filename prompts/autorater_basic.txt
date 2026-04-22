@@ -1,0 +1,15 @@
+You are judging whether the provided evidence is sufficient to answer the question.
+
+Question:
+{question}
+
+Evidence:
+{context}
+
+Return ONLY valid JSON:
+{{
+  "sufficient": true,
+  "reason": "brief reason"
+}}
+
+Mark sufficient=true only if the evidence contains enough information to answer the question definitively without outside knowledge.

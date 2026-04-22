@@ -48,19 +48,55 @@ pip install -r requirements.txt
 
 ```
 src/
-  retrieval.py      # BM25 retriever + context construction
-  generation.py     # LLaMA-3.1-8B prompting and answer extraction
-  evaluation.py     # EM/F1 metrics, abstain detection, categorization
-  autorater.py      # Sufficient context binary classifier
-  confidence.py     # P(Correct) confidence estimation
-  gate.py           # Logistic regression gate + visualization
-  utils.py          # Shared helpers
+  config.py              # Typed, frozen PipelineConfig dataclasses
+  prompts.py             # Central prompt loader
+  utils.py               # Tokenisation, generation, metadata
+  evaluation.py          # EM/F1, abstain detection, categorisation
+  data/                  # Dataset loaders (HotPotQA, NQ-Open)
+  retrieval/             # BM25, Dense E5, Hybrid RRF, Cross-encoder + registry
+  generation/            # QA prompt, HF loader, model registry
+  autorater/             # basic/CoT/fewshot/self-consistency + aggregation
+  confidence/            # inline, self-report, token-entropy, p-true,
+                         # self-consistency, semantic-entropy, ensemble
+  gate/                  # features, LogReg/XGB gates, selective curves,
+                         # calibration, split-conformal, plots
+  analysis/              # bootstrap CIs, paired test, stratified curves
+  demo/                  # ipywidgets threshold widget
+
 configs/
-  default.yaml      # Hyperparameters
+  default.yaml                 # Shared defaults
+  experiments/                 # One YAML per named experiment
+prompts/                       # Prompt templates stored as files
+run/pipeline/
+  run_experiment.py            # Single-config runner
+  run_matrix.py                # Aggregate leaderboard across configs
+  make_figures.py              # Headline figures from the matrix
 notebooks/
-  main_pipeline.ipynb  # End-to-end Colab notebook
+  main_pipeline.ipynb          # End-to-end Colab notebook
+  demo.ipynb                   # Live-threshold demo
 reports/
-  baseline_report.md   # Baseline report
+  baseline_report.md
+  final_report.md              # Final paper-style report
+  presentation_outline.md      # Slide plan
+  figures/                     # Generated figures
+tests/                         # pytest smoke suite
+.github/workflows/ci.yml       # Ruff + pytest on push
+pyproject.toml                 # uv/pip metadata and optional extras
+```
+
+## Running an experiment
+
+```bash
+uv pip install -e .[dev,dense,gate,demo]
+
+# Single config
+python -m run.pipeline.run_experiment configs/experiments/qwen7b_hybrid.yaml
+
+# Full matrix + leaderboard
+python -m run.pipeline.run_matrix configs/experiments/*.yaml
+
+# Headline figures
+python -m run.pipeline.make_figures
 ```
 
 ## Pipeline
