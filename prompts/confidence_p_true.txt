@@ -1,0 +1,14 @@
+Question:
+{question}
+
+Context:
+{context}
+
+Candidate answer:
+{answer}
+
+Is the candidate answer supported by the context?
+Return ONLY valid JSON:
+{{"p_true": 0.0}}
+
+Where p_true is between 0.0 and 1.0.

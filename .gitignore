@@ -36,8 +36,18 @@ notebooks/results/
 # HuggingFace cache
 .cache/
 
+# uv
+uv.lock
+
+# Reports artifacts
+reports/figures/*.png
+reports/figures/*.pdf
+!reports/baseline_report.pdf
+
 # Claude
 .claude/
+.agents/
+skills-lock.json
 
 # docs
 docs/
