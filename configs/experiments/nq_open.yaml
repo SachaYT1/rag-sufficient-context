@@ -1,0 +1,26 @@
+experiment:
+  name: nq_open_qwen7b_hybrid
+
+dataset:
+  name: nq_open
+  split: validation
+  num_examples: 300
+  seed: 42
+
+retrieval:
+  method: hybrid_rrf
+  top_k: 5
+  max_context_tokens: 4096
+
+generation:
+  model_name: qwen2.5-7b-instruct
+  torch_dtype: bfloat16
+
+autorater:
+  method: cot
+
+confidence:
+  method: self_report
+
+gate:
+  model: xgboost
