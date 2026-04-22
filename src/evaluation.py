@@ -11,7 +11,6 @@ from typing import Any
 
 from src.utils import save_run_metadata
 
-
 ABSTENTION_PATTERNS = [
     r"i don'?t know",
     r"cannot be determined",
@@ -303,7 +302,7 @@ def evaluate_all(
                 model_name=model_name,
                 extra={
                     "num_examples": total,
-                    
+
                     "f1_threshold": f1_threshold,
                 },
             )

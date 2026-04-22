@@ -30,7 +30,7 @@ def _cross_validated_gate_scores(
         return None, None, {
             "status": "fallback",
             "reason": f"only one class present: {unique_classes.tolist()}",
-            "class_counts": {int(k): int(v) for k, v in zip(unique_classes, class_counts)},
+            "class_counts": {int(k): int(v) for k, v in zip(unique_classes, class_counts, strict=False)},
         }
 
     min_count = int(class_counts.min())
@@ -41,7 +41,7 @@ def _cross_validated_gate_scores(
         return gate, scores, {
             "status": "train_only",
             "reason": "too few samples per class for cross-validation",
-            "class_counts": {int(k): int(v) for k, v in zip(unique_classes, class_counts)},
+            "class_counts": {int(k): int(v) for k, v in zip(unique_classes, class_counts, strict=False)},
         }
 
     cv = min(5, min_count)
@@ -61,7 +61,7 @@ def _cross_validated_gate_scores(
         "status": "cross_validated",
         "cv_folds": cv,
         "gate_name": gate_name,
-        "class_counts": {int(k): int(v) for k, v in zip(unique_classes, class_counts)},
+        "class_counts": {int(k): int(v) for k, v in zip(unique_classes, class_counts, strict=False)},
     }
 
 
@@ -123,7 +123,7 @@ def _build_selective_curve(
         idx = int(np.argmin(np.abs(np.array(coverages_total) - target_cov)))
         return float(risks[idx])
 
-    eligible = [c for c, r in zip(coverages_total, risks) if r <= 0.05]
+    eligible = [c for c, r in zip(coverages_total, risks, strict=False) if r <= 0.05]
 
     return {
         "thresholds": actual_thresholds,

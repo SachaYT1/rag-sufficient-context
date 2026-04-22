@@ -118,7 +118,7 @@ def load_config_typed(
     config_path: str | Path = "configs/default.yaml",
 ) -> PipelineConfig:
     """Load YAML and construct a typed PipelineConfig."""
-    with open(config_path, "r", encoding="utf-8") as f:
+    with open(config_path, encoding="utf-8") as f:
         raw = yaml.safe_load(f) or {}
     return dict_to_pipeline_config(raw)
 
@@ -129,7 +129,7 @@ def pipeline_config_to_dict(cfg: PipelineConfig) -> dict[str, Any]:
     def _to_dict(value: Any) -> Any:
         if is_dataclass(value):
             return {f.name: _to_dict(getattr(value, f.name)) for f in fields(value)}
-        if isinstance(value, (list, tuple)):
+        if isinstance(value, list | tuple):
             return [_to_dict(v) for v in value]
         if isinstance(value, dict):
             return {k: _to_dict(v) for k, v in value.items()}

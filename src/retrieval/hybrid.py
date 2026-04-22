@@ -43,4 +43,4 @@ class HybridRRFRetriever(BaseRetriever):
         bm25_rrf = _rrf_from_ranks(_scores_to_ranks(bm25_scores), k=self.rrf_k)
         dense_rrf = _rrf_from_ranks(_scores_to_ranks(dense_scores), k=self.rrf_k)
         w_bm25, w_dense = self.weights
-        return [w_bm25 * a + w_dense * b for a, b in zip(bm25_rrf, dense_rrf)]
+        return [w_bm25 * a + w_dense * b for a, b in zip(bm25_rrf, dense_rrf, strict=False)]

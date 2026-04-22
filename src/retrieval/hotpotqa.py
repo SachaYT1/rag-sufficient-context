@@ -29,14 +29,14 @@ def load_hotpotqa(
 
         passages: list[dict[str, Any]] = []
         for idx, (title, sentences) in enumerate(
-            zip(item["context"]["title"], item["context"]["sentences"])
+            zip(item["context"]["title"], item["context"]["sentences"], strict=False)
         ):
             sentence_text = " ".join(sentences).strip()
             passage_text = f"{title}: {sentence_text}".strip()
             is_support = title in support_titles
             supporting_sentence_indices = [
                 sent_id
-                for support_title, sent_id in zip(support_titles, support_sent_ids)
+                for support_title, sent_id in zip(support_titles, support_sent_ids, strict=False)
                 if support_title == title
             ]
             passages.append(

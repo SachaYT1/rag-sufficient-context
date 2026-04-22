@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
 
@@ -44,7 +45,7 @@ def _aurc_from_scores_labels(scores: np.ndarray, labels: np.ndarray, total: int)
     risks: list[float] = []
     covs: list[float] = []
     cum_correct = 0.0
-    for i, (score, label) in enumerate(zip(s, y), start=1):
+    for i, (_score, label) in enumerate(zip(s, y, strict=False), start=1):
         cum_correct += float(label)
         covs.append(i / total)
         risks.append(1.0 - cum_correct / i)

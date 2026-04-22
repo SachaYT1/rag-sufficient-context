@@ -45,7 +45,7 @@ def load_nq_open(
     if passages_jsonl:
         path = Path(passages_jsonl)
         if path.exists():
-            with open(path, "r", encoding="utf-8") as f:
+            with open(path, encoding="utf-8") as f:
                 for line in f:
                     row = json.loads(line)
                     passage_index[row["question"].strip().lower()] = row.get("passages", [])

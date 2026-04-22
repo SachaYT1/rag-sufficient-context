@@ -21,7 +21,7 @@ import yaml
 
 def load_config(config_path: str = "configs/default.yaml") -> dict:
     """Load YAML configuration file."""
-    with open(config_path, "r", encoding="utf-8") as f:
+    with open(config_path, encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -35,7 +35,7 @@ def cache_results(data: Any, cache_path: str) -> None:
 def load_cached(cache_path: str) -> Any | None:
     """Load cached JSON data if it exists."""
     if os.path.exists(cache_path):
-        with open(cache_path, "r", encoding="utf-8") as f:
+        with open(cache_path, encoding="utf-8") as f:
             return json.load(f)
     return None
 
