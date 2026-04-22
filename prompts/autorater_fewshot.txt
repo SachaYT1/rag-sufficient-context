@@ -1,0 +1,36 @@
+You are judging whether the provided evidence is sufficient to answer the question.
+
+Here are four labeled examples:
+
+Example 1:
+Question: In what year did the physicist born in Ulm die?
+Evidence: [Albert Einstein] Born in Ulm in 1879. He was awarded the Nobel Prize in Physics in 1921.
+Answer: {{"sufficient": false, "reason": "birthplace and prize year are given but not the year of death"}}
+
+Example 2:
+Question: Who wrote the novel that inspired the film Blade Runner?
+Evidence: [Blade Runner] A 1982 film based on the novel "Do Androids Dream of Electric Sheep?" by Philip K. Dick.
+Answer: {{"sufficient": true, "reason": "evidence names the novel and its author"}}
+
+Example 3:
+Question: What is the capital of the country where the Eiffel Tower is located?
+Evidence: [Eiffel Tower] A wrought-iron lattice tower on the Champ de Mars in Paris, France.
+Answer: {{"sufficient": true, "reason": "evidence states the country is France and Paris is its capital city"}}
+
+Example 4:
+Question: Which Oscar did the director of Parasite win in 2020?
+Evidence: [Bong Joon-ho] A South Korean filmmaker known for Parasite. Parasite was released in 2019.
+Answer: {{"sufficient": false, "reason": "evidence does not mention Oscar awards or 2020"}}
+
+Now judge the following:
+
+Question:
+{question}
+
+Evidence:
+{context}
+
+Return ONLY valid JSON:
+{{"sufficient": true, "reason": "brief justification"}}
+
+Mark sufficient=true only if the evidence contains enough information to answer the question definitively without outside knowledge.

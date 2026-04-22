@@ -1,0 +1,14 @@
+You are judging whether the provided evidence is sufficient to answer the question.
+
+Question:
+{question}
+
+Evidence:
+{context}
+
+Think step by step about which facts are needed to answer the question, then check whether each required fact is explicitly stated in the evidence.
+
+After your reasoning, return ONLY valid JSON on the final line:
+{{"sufficient": true, "reason": "brief justification"}}
+
+Mark sufficient=true only if the evidence contains enough information to answer the question definitively without outside knowledge.

@@ -1,0 +1,28 @@
+experiment:
+  name: qwen7b_hybrid
+
+dataset:
+  name: hotpotqa
+  split: validation
+  num_examples: 500
+  seed: 42
+
+retrieval:
+  method: hybrid_rrf
+  top_k: 5
+  max_context_tokens: 4096
+  dense_model: intfloat/e5-base-v2
+  hybrid_weights: [0.5, 0.5]
+
+generation:
+  model_name: qwen2.5-7b-instruct
+  torch_dtype: bfloat16
+
+autorater:
+  method: fewshot
+
+confidence:
+  method: self_report
+
+gate:
+  model: xgboost
