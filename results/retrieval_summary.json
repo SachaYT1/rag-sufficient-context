@@ -1,0 +1,14 @@
+{
+  "num_examples": 500,
+  "truncation_rate": 0.0,
+  "mean_context_tokens_before_truncation": 454.258,
+  "mean_context_tokens_after_truncation": 454.258,
+  "mean_selected_passages": 4.982,
+  "support_title_recall_at_k_pre_truncation": 0.799,
+  "support_title_recall_at_k_post_truncation": 0.799,
+  "full_support_coverage_at_k_pre_truncation": 0.618,
+  "full_support_coverage_at_k_post_truncation": 0.618,
+  "lost_support_after_truncation_rate": 0.0,
+  "mean_top1_bm25_score": 9.315495697651611,
+  "mean_topk_bm25_score": 6.24863477802552
+}

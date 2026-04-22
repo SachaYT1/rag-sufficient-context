@@ -1,0 +1,66 @@
+{
+  "created_at_utc": "2026-04-22T22:54:18.485345+00:00",
+  "python_version": "3.12.12 (main, Oct 10 2025, 08:52:57) [GCC 11.4.0]",
+  "platform": "Linux-6.6.113+-x86_64-with-glibc2.35",
+  "git_commit": "267751639e8a841df1a19913b11de2dd6e3c1c99",
+  "seed": 42,
+  "model_name": "mistralai/Mistral-7B-Instruct-v0.3",
+  "config": {
+    "execution": {
+      "output_dir": "/kaggle/working/results",
+      "seed": 42
+    },
+    "dataset": {
+      "num_examples": 500,
+      "seed": 42
+    },
+    "generation": {
+      "model_name": "mistralai/Mistral-7B-Instruct-v0.3",
+      "device_map": "auto",
+      "torch_dtype": "float16",
+      "trust_remote_code": false,
+      "max_new_tokens": 96,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 50,
+      "repetition_penalty": 1.0
+    },
+    "retrieval": {
+      "top_k": 5,
+      "max_context_tokens": 4096
+    },
+    "autorater": {
+      "chunk_size_tokens": 1400,
+      "aggregation": "support_all_required",
+      "max_new_tokens": 64
+    },
+    "confidence": {
+      "method": "inline"
+    },
+    "gate": {
+      "threshold_steps": 50
+    },
+    "evaluation": {
+      "f1_threshold": 0.5
+    }
+  },
+  "package_versions": {
+    "torch": "2.10.0+cu128",
+    "transformers": "5.0.0",
+    "datasets": "4.8.3",
+    "rank-bm25": "0.2.2",
+    "scikit-learn": "1.6.1",
+    "numpy": "2.0.2",
+    "pandas": "2.3.3",
+    "matplotlib": "3.10.0",
+    "pyyaml": "6.0.3",
+    "tqdm": "4.67.3",
+    "accelerate": "1.12.0"
+  },
+  "extra": {
+    "num_examples": 500,
+    "correct": 178,
+    "abstain": 190,
+    "hallucinate": 132
+  }
+}
