@@ -31,6 +31,7 @@ Thumbs.db
 
 # Jupyter
 .ipynb_checkpoints/
+notebooks/results/
 
 # HuggingFace cache
 .cache/

@@ -1,3 +1,8 @@
+experiment:
+  name: rag_sufficient_context
+  output_dir: results
+  seed: 42
+
 dataset:
   name: hotpotqa
   split: validation
@@ -5,22 +10,36 @@ dataset:
   seed: 42
 
 retrieval:
-  method: bm25
+  method: bm25_distractor_rerank
   top_k: 5
   max_context_tokens: 4096
 
 generation:
-  model: mistralai/Mistral-7B-Instruct-v0.3
+  model_name: mistralai/Mistral-7B-Instruct-v0.3
+  device_map: auto
+  torch_dtype: float16
+  trust_remote_code: false
   max_new_tokens: 256
   temperature: 0.0
+  top_p: 1.0
+  top_k: 50
+  repetition_penalty: 1.0
 
 autorater:
   chunk_size_tokens: 1400
-  aggregation: or
+  aggregation: support_all_required
+  max_new_tokens: 96
 
 confidence:
-  method: p_correct
+  method: self_report
+  max_new_tokens: 64
+  num_samples: 5
+  sample_temperature: 0.7
+  sample_top_p: 0.95
 
 gate:
   model: logistic_regression
   threshold_steps: 50
+
+evaluation:
+  f1_threshold: 0.5
