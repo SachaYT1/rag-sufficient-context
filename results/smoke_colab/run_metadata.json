@@ -1,0 +1,81 @@
+{
+  "created_at_utc": "2026-04-22T21:01:33.460367+00:00",
+  "python_version": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+  "platform": "Linux-6.6.113+-x86_64-with-glibc2.35",
+  "git_commit": "267751639e8a841df1a19913b11de2dd6e3c1c99",
+  "seed": 42,
+  "model_name": "qwen2.5-3b-instruct",
+  "config": {
+    "experiment": {
+      "name": "smoke_colab",
+      "output_dir": "results",
+      "seed": 42
+    },
+    "dataset": {
+      "name": "hotpotqa",
+      "split": "validation",
+      "num_examples": 20,
+      "seed": 42
+    },
+    "retrieval": {
+      "method": "bm25",
+      "top_k": 5,
+      "max_context_tokens": 4096,
+      "dense_model": "intfloat/e5-base-v2",
+      "reranker_model": "BAAI/bge-reranker-base",
+      "hybrid_weights": [
+        0.5,
+        0.5
+      ]
+    },
+    "generation": {
+      "model_name": "qwen2.5-3b-instruct",
+      "device_map": "auto",
+      "torch_dtype": "bfloat16",
+      "trust_remote_code": false,
+      "max_new_tokens": 256,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 50,
+      "repetition_penalty": 1.0
+    },
+    "autorater": {
+      "method": "cot",
+      "chunk_size_tokens": 1400,
+      "aggregation": "support_all_required",
+      "max_new_tokens": 96,
+      "model_name": null
+    },
+    "confidence": {
+      "method": "self_report",
+      "max_new_tokens": 64,
+      "num_samples": 5,
+      "sample_temperature": 0.7,
+      "sample_top_p": 0.95
+    },
+    "gate": {
+      "model": "logistic_regression",
+      "threshold_steps": 50,
+      "conformal_alpha": 0.1
+    },
+    "evaluation": {
+      "f1_threshold": 0.5
+    }
+  },
+  "package_versions": {
+    "torch": "2.10.0+cu128",
+    "transformers": "5.0.0",
+    "datasets": "4.0.0",
+    "rank-bm25": "0.2.2",
+    "scikit-learn": "1.6.1",
+    "numpy": "1.26.4",
+    "pandas": "3.0.2",
+    "matplotlib": "3.10.0",
+    "pyyaml": "6.0.3",
+    "tqdm": "4.67.3",
+    "accelerate": "1.13.0"
+  },
+  "extra": {
+    "autorater_model": "qwen2.5-3b-instruct"
+  }
+}
