@@ -40,12 +40,12 @@ notebooks/results/
 uv.lock
 
 # Reports artifacts
-reports/figures/*.png
-reports/figures/*.pdf
+
 !reports/baseline_report.pdf
 
 # Experiment outputs (regenerated per run)
 results/*
+!results/smoke_colab/
 !results/.gitkeep
 
 # Claude
@@ -56,3 +56,6 @@ skills-lock.json
 # docs
 docs/
 CLAUDE.md
+
+# MCP config (local Claude Code)
+.mcp.json

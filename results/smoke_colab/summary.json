@@ -1,0 +1,42 @@
+{
+  "experiment": "smoke_colab",
+  "metrics": {
+    "total": 20,
+    "correct": 9,
+    "abstain": 6,
+    "hallucinate": 5,
+    "correct_rate": 0.45,
+    "abstain_rate": 0.3,
+    "hallucinate_rate": 0.25,
+    "mean_em": 0.35,
+    "mean_f1": 0.42333333333333334,
+    "answered_accuracy": 0.6428571428571429,
+    "hallucination_rate_when_answering": 0.35714285714285715,
+    "safe_abstention_rate": 0.3125,
+    "over_abstention_rate": 0.25,
+    "unsafe_answer_rate": 0.3125,
+    "parametric_rescue_rate": 0.375,
+    "sufficient_correct_rate": 0.75,
+    "insufficient_hallucinate_rate": 0.3125
+  },
+  "baseline_aurc": 0.11607142857142853,
+  "proposed_aurc": 0.05064185814185811,
+  "gate_meta": {
+    "status": "cross_validated",
+    "cv_folds": 5,
+    "gate_name": "logistic_regression",
+    "class_counts": {
+      "0": 5,
+      "1": 9
+    },
+    "fallback_used": false
+  },
+  "conformal": {
+    "alpha": 0.1,
+    "threshold": 0.6264978107989474,
+    "coverage_total": 0.7,
+    "risk": 0.0,
+    "num_calib": 4,
+    "num_test": 10
+  }
+}

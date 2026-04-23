@@ -1,0 +1,8 @@
+{
+  "alpha": 0.1,
+  "threshold": 0.6264978107989474,
+  "coverage_total": 0.7,
+  "risk": 0.0,
+  "num_calib": 4,
+  "num_test": 10
+}
